@@ -1,0 +1,14 @@
+version: "2.2" 
+
+services: 
+  asir_bind:
+    image: internetsystemsconsortium/bind9:9.16 
+    ports:
+      - 53:53
+  asir_client:
+    image: ubuntu
+    stdin_open: true  # docker run -i
+    tty: true         # docker run -t
+
+
+          
