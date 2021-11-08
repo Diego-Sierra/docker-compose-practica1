@@ -5,10 +5,13 @@ services:
     image: internetsystemsconsortium/bind9:9.16 
     ports:
       - 53:53
+    volumes:
+      - configure:/etc/bind
   asir_client:
     image: diegosierra/cliente_ubuntu:nettools
     stdin_open: true  # docker run -i
     tty: true         # docker run -t
-
+volumes:
+    configure: 
 
           
