@@ -16,6 +16,8 @@ services:
     tty: true         # docker run -t
     networks: 
        - br1
+    dns:
+       - 10.10.0.12
 volumes:
     configure: 
 networks:
