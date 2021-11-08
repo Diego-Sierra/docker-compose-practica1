@@ -8,7 +8,8 @@ services:
     volumes:
       - configure:/etc/bind
     networks: 
-       - br1
+       br1:
+        ipv4_address: 10.10.0.12
   asir_client:
     image: diegosierra/cliente_ubuntu:nettools
     stdin_open: true  # docker run -i
