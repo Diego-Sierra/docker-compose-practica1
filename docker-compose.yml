@@ -6,7 +6,7 @@ services:
     ports:
       - 53:53
   asir_client:
-    image: ubuntu
+    image: diegosierra/cliente_ubuntu:nettools
     stdin_open: true  # docker run -i
     tty: true         # docker run -t
 
