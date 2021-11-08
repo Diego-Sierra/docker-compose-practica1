@@ -7,11 +7,22 @@ services:
       - 53:53
     volumes:
       - configure:/etc/bind
+    networks: 
+       - br1
   asir_client:
     image: diegosierra/cliente_ubuntu:nettools
     stdin_open: true  # docker run -i
     tty: true         # docker run -t
+    networks: 
+       - br1
 volumes:
     configure: 
-
+networks:
+  br1:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.0.0/24
+          gateway: 10.10.0.1
           
