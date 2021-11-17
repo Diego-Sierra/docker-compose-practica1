@@ -1,31 +1,30 @@
-version: "2.2" 
-
-services: 
-  asir_bind:
-    image: internetsystemsconsortium/bind9:9.16 
-    ports:
-      - 53:53
-    volumes:
-      - configure:/etc/bind
-    networks: 
-       br1:
-        ipv4_address: 10.10.0.12
-  asir_client:
-    image: diegosierra/cliente_ubuntu:nettools
+version: "2.2" #indica la version de docker compose a utilizar
+services: #comienza la declaracion de servicios
+  asir_bind: #nombre del servicio
+    image: internetsystemsconsortium/bind9:9.16 #imagen de docker a utilizar, se descargará del repositorio si no existe en local
+    ports: #redireccionamiento de puertos
+      - 53:53 #puerto del host:puerto del contenedor
+    volumes: #volumenes que utilizará el contenedor
+      - configure:/etc/bind #asocia el volumen "configure" a la ruta "/etc/bind" del contenedor
+    networks: #configuracion de red 
+       br1: #red que utilizará el contenedor
+        ipv4_address: 10.10.0.12 #ip estatica asignada dentro de la red
+  asir_client: #declaracion de otro servicio
+    image: diegosierra/cliente_ubuntu:nettools #imagen a utilizar, se utiliza un cliente ubuntu con herramientas de red instaladas
     stdin_open: true  # docker run -i
-    tty: true         # docker run -t
-    networks: 
-       - br1
-    dns:
-       - 10.10.0.12
-volumes:
-    configure: 
-networks:
-  br1:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 10.10.0.0/24
-          gateway: 10.10.0.1
+    tty: true         # docker run -t 
+    networks: #configuracion de red
+       - br1 #red que utilizará el contenedor
+    dns: #configuraciónn DNS
+       - 10.10.0.12 #dns asignado al contenedor (sustituye configuracion por defecto y apunta al otro contenedor, que corresponde a un servidor DNS con IP estatica)
+volumes: #declaracion de volumenes
+    configure: #se indica que se va a utilizar un volumen llamado "configure" y se crea, si ya estuviera creado previamente se indicaria añadiendo external: True"
+networks: #declaracion de red
+  br1: #se indica que se va a utilizar una red llamada br 1 y se crea, si ya existiera previamente se indicaria con "external: True"
+    driver: bridge #modo en que se va a crear la red
+    ipam: #llamada al gestor de IPs de docker
+      driver: default 
+      config: #configuracion de las IPs
+        - subnet: 10.10.0.0/24 #creacion de una subred cuyas IPs utilizará la red
+          gateway: 10.10.0.1 #puerta de enlace
           
